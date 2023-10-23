@@ -7,11 +7,13 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import Home from './screens/Home';
 import About from './screens/About';
 import Map from './screens/Map';
+import Profile from './screens/Profile';
 
 //Screen names
 const homeName = "Home";
 const aboutName = "About";
 const mapName = "Map";
+const profileName = "Profile";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,18 +24,18 @@ function MainContainer() {
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
-            let iconName = 'default-icon-name';
+            let iconName = 'image';
             let rn = route.name;
 
             if (rn === homeName) {
               iconName = focused ? 'home' : 'home-outline';
-
             } else if (rn === aboutName) {
               iconName = focused ? 'information' : 'information-outline';
-
+            } else if (rn === profileName) {
+              iconName = focused ? 'person' : 'person-outline';
             } else if (rn === mapName) {
               iconName = focused ? 'map' : 'map-outline';
-            }
+            } 
 
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -52,6 +54,13 @@ function MainContainer() {
           component={Map}
           options={{
             tabBarLabel: 'Map',
+          }}
+        />
+        <Tab.Screen
+          name={profileName}
+          component={Profile}
+          options={{
+            tabBarLabel: 'Profile',
           }}
         />
         <Tab.Screen
