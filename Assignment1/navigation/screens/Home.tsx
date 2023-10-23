@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, VirtualizedList } from 'react-native';
+import { View, Text, VirtualizedList, StyleSheet } from 'react-native';
 import Papa from 'papaparse';
 import StationList from '../../station-list/StationList';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -29,8 +29,8 @@ export default function Home() {
 
   const renderItem = ({ item }: { item: CsvRow }) => {
     return (
-      <View>
-        <Text>{item.HALTESTELLEN_ID}: {item.NAME}</Text>
+      <View style={styles.item}>
+        <Text style={styles.itemText}>{item.NAME}</Text>
         {/* Add more Text components for other columns as needed */}
       </View>
     );
@@ -47,3 +47,15 @@ export default function Home() {
     />
     );
 }
+
+const styles = StyleSheet.create({
+    item: {
+      borderColor: 'black',
+      borderWidth: 1,
+      borderRadius: 8,
+      padding: 8
+    },
+    itemText: {
+        fontSize: 18
+    }
+  });
