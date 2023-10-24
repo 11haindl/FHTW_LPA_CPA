@@ -1,23 +1,16 @@
-import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import Papa from "papaparse";
 import * as Location from "expo-location";
 import { useEffect, useState } from "react";
+import { fetchStations } from "../../StationsFetcher";
+import { Station } from "../../Station";
+import React = require("react");
 
 interface ILocation {
   latitude: number;
   longitude: number;
 }
 
-// Definition of object "Station"
-type Station = {
-  // Properties of object - names are as they are in the csv-file
-  HALTESTELLEN_ID: string;
-  NAME: string;
-  WGS84_LAT: string;
-  WGS84_LON: string;
-};
 
 export default function Map() {
   const [markers, setMarkers] = useState<Station[]>([]);
@@ -46,13 +39,9 @@ export default function Map() {
     getUserLocation();
 
     // fetch data from csv
-    fetch("https://data.wien.gv.at/csv/wienerlinien-ogd-haltestellen.csv")
-      .then((response) => response.text())
-      .then((csv) => {
-        // Parse csv data to get an array of Station objects
-        const parsedData = Papa.parse(csv, { header: true }).data as Station[];
-        setMarkers(parsedData);
-      });
+    fetchStations().then((result) => {
+      setMarkers(result)
+    });
   }, []);
 
   return (

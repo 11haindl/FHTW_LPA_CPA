@@ -1,36 +1,19 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  VirtualizedList,
-  StyleSheet,
-  Modal,
-  Pressable,
-  TextInput,
-} from "react-native";
-import Papa from "papaparse";
-
-// Definition of object "Station"
-type Station = {
-  // Properties of object - names are as they are in the csv-file
-  HALTESTELLEN_ID: string;
-  NAME: string;
-};
+import { View, Text, VirtualizedList, StyleSheet, Modal, Pressable, TextInput } from "react-native";
+import { fetchStations } from "../../StationsFetcher";
+import { Station } from "../../Station";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [data, setData] = React.useState<Station[]>([]);
-  const [modalVisible, setModalVisible] = React.useState(false);
-  const [station, setStation] = React.useState("");
+  const [data, setData] = useState<Station[]>([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [station, setStation] = useState("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     // fetch data from csv
-    fetch("https://data.wien.gv.at/csv/wienerlinien-ogd-haltestellen.csv")
-      .then((response) => response.text())
-      .then((csv) => {
-        // Parse csv data to get an array of Station objects
-        const { data } = Papa.parse<Station>(csv, { header: true });
-        setData(data);
-      });
+    fetchStations().then((result) => {
+      setData(result)
+    });
   }, []);
 
   function addNewStation() {
@@ -41,6 +24,8 @@ export default function Home() {
     const newStation: Station = {
       HALTESTELLEN_ID: newId.toString(),
       NAME: station,
+      WGS84_LAT: "",
+      WGS84_LON: ""
     };
     // copy data to new array and add the created Station
     const newData = [...data, newStation];
