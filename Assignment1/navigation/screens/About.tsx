@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import * as data from '../../package.json';
-import { Image } from 'react-native';
 
 type AboutProps = {
     navigation: any;
@@ -12,7 +11,7 @@ const expoVersion = data.dependencies.expo;
 
 export default function About({ navigation }: AboutProps) {
     return (
-        <View style={styles.table}>
+        <View style={styles.table}> {/* Display the developer Information in a table */}
             <View style={styles.row}>
                 <Text style={styles.cell}>Name:</Text>
                 <Text style={styles.cell}>Peter Silie</Text>
