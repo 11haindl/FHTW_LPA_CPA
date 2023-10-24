@@ -15,14 +15,16 @@ const aboutName = "About";
 const mapName = "Map";
 const profileName = "Profile";
 
+// create the Bottom Navigation with @react-navigation/bottom-tabs
 const Tab = createBottomTabNavigator();
 
 function MainContainer() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName={homeName}
+        initialRouteName={homeName} // Name of the landing page
         screenOptions={({ route }) => ({
+          // set icons for the tabs
           tabBarIcon: ({ focused, color, size }) => {
             let iconName = 'image';
             let rn = route.name;
@@ -42,6 +44,7 @@ function MainContainer() {
           },
         })}>
 
+        {/* create a screen for every Page */}
         <Tab.Screen
           name={homeName}
           component={Home}

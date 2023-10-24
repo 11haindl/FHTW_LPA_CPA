@@ -2,16 +2,12 @@ import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import * as data from '../../package.json';
 
-type AboutProps = {
-    navigation: any;
-  };
-
 const reactNativeVersion = data.dependencies['react-native'];
 const expoVersion = data.dependencies.expo;
 
-export default function About({ navigation }: AboutProps) {
+export default function About() {
     return (
-        <View style={styles.table}> {/* Display the developer Information in a table */}
+        <View style={styles.table}> 
             <View style={styles.row}>
                 <Text style={styles.cell}>Name:</Text>
                 <Text style={styles.cell}>Peter Silie</Text>
@@ -46,7 +42,7 @@ export const styles = StyleSheet.create({
        flex: 1,
        padding: 10,
        width: 200,
-       height: 200,
+       height: 100,
        textAlign: "left",
        fontSize: 18,
     },
