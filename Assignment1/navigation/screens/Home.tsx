@@ -86,7 +86,7 @@ export default function Home() {
       </Modal>
       {/* Button for opening Modal and add a new Station */}
       <Pressable style={[styles.button]} onPress={() => setModalVisible(true)}>
-        <Text style={styles.textStyle}>Show Modal</Text>
+        <Text style={styles.textStyle}>Station hinzufügen</Text>
       </Pressable>
     </>
   );

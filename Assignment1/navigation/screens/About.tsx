@@ -10,7 +10,7 @@ export default function About() {
     <View>
       <View style={styles.row}>
       <Image
-          source={require("../../assets/homer.jpg")}
+          source={require("../../assets/homer_simpson.png")}
           style={styles.image}
         />
       </View>
