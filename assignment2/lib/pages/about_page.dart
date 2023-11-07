@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:yaml/yaml.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatefulWidget {
   @override
@@ -8,39 +8,43 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
-  Map<String, String> _packageVersions = {};
+  String appVersion = '';
 
   @override
   void initState() {
     super.initState();
-    _loadPackageVersions();
+    getAppVersion(); // Call the method when the widget is initialized.
   }
 
-  Future<Map<String, String>> getPackageVersions() async {
-    final yamlString = await rootBundle.loadString('pubspec.yaml');
-    final parsedYaml = loadYaml(yamlString);
-
-    final dependencies = parsedYaml['dependencies'];
-    final devDependencies = parsedYaml['dev_dependencies'];
-
-    final packageVersions = <String, String>{};
-
-    if (dependencies != null) {
-      packageVersions.addAll(dependencies);
-    }
-
-    if (devDependencies != null) {
-      packageVersions.addAll(devDependencies);
-    }
-
-    return packageVersions;
-  }
-
-  Future<void> _loadPackageVersions() async {
-    final versions = await getPackageVersions();
+  Future<void> getAppVersion() async {
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     setState(() {
-      _packageVersions = versions;
+      appVersion = packageInfo.version;
     });
+  }
+
+  // Function to open the link in the system browser
+  _launchURL() async {
+    const url =
+        'https://weristgeradebundeskanzler.at/'; // Replace with your URL
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchEmailClient() async {
+    const email =
+        'vivaf37855@rdluxe.com'; // Replace with the email address you want to open
+    final Uri emailUri = Uri(scheme: 'mailto', path: email);
+    final String emailUrl = emailUri.toString();
+
+    if (await canLaunch(emailUrl)) {
+      await launch(emailUrl);
+    } else {
+      throw 'Could not launch $emailUrl';
+    }
   }
 
   @override
@@ -53,12 +57,39 @@ class _AboutPageState extends State<AboutPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'Installed Package Versions',
-              style: TextStyle(fontSize: 24),
+            Text("App Version: " + appVersion),
+            Text("Name: Peter Silie"),
+            Padding(
+              padding: const EdgeInsets.only(top: 60.0),
+              child: Center(
+                child: Container(
+                  width: 200,
+                  height: 150,
+                  child: Image.asset('assets/images/homer_simpson.png'),
+                ),
+              ),
             ),
-            for (var packageName in _packageVersions.keys)
-              Text('$packageName: ${_packageVersions[packageName]}'),
+            // Clickable link
+            InkWell(
+              child: Text(
+                'https://weristgeradebundeskanzler.at/',
+                style: TextStyle(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+              onTap: _launchURL,
+            ),
+            InkWell(
+              child: Text(
+                'Contact us via email',
+                style: TextStyle(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+              onTap: _launchEmailClient,
+            )
           ],
         ),
       ),
