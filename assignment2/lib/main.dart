@@ -11,7 +11,6 @@ Future<void> main() async {
   await Hive.initFlutter(directory.path);
   Hive.registerAdapter(PlaceModelAdapter());
   await Hive.openBox('placesBox');
-
   runApp(const MyApp());
 }
 
