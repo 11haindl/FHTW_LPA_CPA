@@ -23,10 +23,9 @@ class _AboutPageState extends State<AboutPage> {
     });
   }
 
-  // Function to open the link in the system browser
   _launchURL() async {
     const url =
-        'https://weristgeradebundeskanzler.at/'; // Replace with your URL
+        'https://weristgeradebundeskanzler.at/';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -36,7 +35,7 @@ class _AboutPageState extends State<AboutPage> {
 
   _launchEmailClient() async {
     const email =
-        'vivaf37855@rdluxe.com'; // Replace with the email address you want to open
+        'vivaf37855@rdluxe.com';
     final Uri emailUri = Uri(scheme: 'mailto', path: email);
     final String emailUrl = emailUri.toString();
 

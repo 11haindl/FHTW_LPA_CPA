@@ -1,7 +1,5 @@
-// navigation_tabs.dart
-
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart';   // Import your screen files appropriately
+import 'pages/home_page.dart';
 import 'pages/map_page.dart';
 import 'pages/profile_page.dart';
 import 'pages/about_page.dart';
@@ -47,7 +45,7 @@ class _NavigationTabsState extends State<NavigationTabs> {
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey, // Set an appropriate color for unselected items
+        unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),
     );
